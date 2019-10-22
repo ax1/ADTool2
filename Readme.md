@@ -1,3 +1,6 @@
+(forked from https://github.com/tahti/ADTool2, see more documentation for this tool at http://satoss.uni.lu/members/piotr/adtool/index.php)
+
+
 ## Overview
 
 The Attack Defense Tree Tool (ADTool) allows users to model and display attack defense
