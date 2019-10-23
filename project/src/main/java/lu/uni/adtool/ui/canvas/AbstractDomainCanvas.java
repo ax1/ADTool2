@@ -36,6 +36,7 @@ import lu.uni.adtool.domains.ValuationDomain;
 import lu.uni.adtool.domains.custom.AdtRealDomain;
 import lu.uni.adtool.domains.rings.Bool;
 import lu.uni.adtool.domains.rings.BoundedInteger;
+import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Int;
 import lu.uni.adtool.domains.rings.LMHEValue;
 import lu.uni.adtool.domains.rings.LMHValue;
@@ -56,6 +57,7 @@ import lu.uni.adtool.ui.RankingDockable;
 import lu.uni.adtool.ui.TreeDockable;
 import lu.uni.adtool.ui.ValuationsDockable;
 import lu.uni.adtool.ui.inputdialogs.BoundedIntegerDialog;
+import lu.uni.adtool.ui.inputdialogs.ComplexDialog;
 import lu.uni.adtool.ui.inputdialogs.InputDialog;
 import lu.uni.adtool.ui.inputdialogs.IntDialog;
 import lu.uni.adtool.ui.inputdialogs.LMHDialog;
@@ -168,7 +170,7 @@ public class AbstractDomainCanvas<Type extends Ring> extends AbstractTreeCanvas 
         dialog = new RealDialog(controller.getFrame());
         value = (Ring) (dialog.showInputDialog(value));
       }
-		} else if (value instanceof Complex) {
+			else if (value instanceof Complex) {
 			dialog = new ComplexDialog(controller.getFrame());
 			value = (Ring) (dialog.showInputDialog(value));
 		}
