@@ -168,6 +168,10 @@ public class AbstractDomainCanvas<Type extends Ring> extends AbstractTreeCanvas 
         dialog = new RealDialog(controller.getFrame());
         value = (Ring) (dialog.showInputDialog(value));
       }
+		} else if (value instanceof Complex) {
+			dialog = new ComplexDialog(controller.getFrame());
+			value = (Ring) (dialog.showInputDialog(value));
+		}
       else if (value instanceof LMHValue) {
         dialog = new LMHDialog(controller.getFrame());
           value = (Ring) (dialog.showInputDialog(value));
