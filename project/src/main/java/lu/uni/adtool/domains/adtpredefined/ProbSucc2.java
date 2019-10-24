@@ -1,12 +1,13 @@
 package lu.uni.adtool.domains.adtpredefined;
 
+import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.tools.Options;
-import lu.uni.adtool.tree.ADTNode.Type;
+import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 
-public class ProbSucc2 implements AdtDomain<Complex> {
+public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain {
 
 	public ProbSucc2() {
 	}
@@ -36,7 +37,14 @@ public class ProbSucc2 implements AdtDomain<Complex> {
 	int counter = 0;
 
 	@Override
-	public Complex calc(Complex a, Complex b, Type type) {
+	public Complex calc(Complex a, Complex b, ADTNode.Type type) {
+		System.out.println(
+				"DEVELOPER ERROR: calc(a,b,type) should not be called on compex domains, Use calc(a,b,bode) instead");
+		return new Complex(String.valueOf(counter++));
+	}
+
+	@Override
+	public Complex calc(Complex a, Complex b, ADTNode node) {
 		return new Complex(String.valueOf(counter++));
 	}
 
