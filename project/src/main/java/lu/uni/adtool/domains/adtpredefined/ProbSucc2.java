@@ -1,5 +1,6 @@
 package lu.uni.adtool.domains.adtpredefined;
 
+import ax1.CalculatorWorstCase;
 import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.rings.Complex;
@@ -39,13 +40,13 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain {
 	@Override
 	public Complex calc(Complex a, Complex b, ADTNode.Type type) {
 		System.out.println(
-				"DEVELOPER ERROR: calc(a,b,type) should not be called on compex domains, Use calc(a,b,bode) instead");
+				"@@@@DEVELOPER ERROR@@@@: calc(a,b,type) should not be called on compex domains, Use calc(a,b,bode) instead");
 		return new Complex(String.valueOf(counter++));
 	}
 
 	@Override
 	public Complex calc(Complex a, Complex b, ADTNode node) {
-		return new Complex(String.valueOf(counter++));
+		return CalculatorWorstCase.calc(a, b, node);
 	}
 
 	@Override
@@ -57,4 +58,5 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain {
 	public Complex co(Complex a, Complex b) {
 		return new Complex();
 	}
+
 }

@@ -8,6 +8,12 @@ public class Complex implements Ring {
 		this.value = "";
 	}
 
+	/**
+	 * N dimensional complex value
+	 * 
+	 * @param value format: "r1,r2,r3..." or "r1, r2, r3..." where r1 r2 r3... are
+	 *              double numbers
+	 */
 	public Complex(String value) {
 		this.value = value;
 	}
@@ -35,5 +41,13 @@ public class Complex implements Ring {
 
 	public Object clone() {
 		return new Complex(value);
+	}
+
+	public double[] toVector() {
+		String[] data = value.replace(" ", "").split(",");
+		double[] arr = new double[data.length];
+		for (int r = 0; r < data.length; r++)
+			arr[r] = Double.valueOf(data[r]);
+		return arr;
 	}
 }
