@@ -20,12 +20,13 @@
  */
 package lu.uni.adtool.domains;
 
+import java.util.HashMap;
+
+import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 import lu.uni.adtool.tree.SandNode;
-
-import java.util.HashMap;
 
 /**
  * Evaluate value of each node for given domain and value assignement map. Works
@@ -118,7 +119,15 @@ public class Evaluator<Type extends Ring> {
           result = evaluate((ADTNode) root.getChildren().get(i), valuesMap);
         }
         else {
-          result = atdDomain.calc(result, evaluate((ADTNode) root.getChildren().get(i), valuesMap), root.getType());
+					if (AdtComplexDomain.class.isInstance(atdDomain)) {
+						Complex a = (Complex) result;
+						Complex b = (Complex) evaluate((ADTNode) root.getChildren().get(i), valuesMap);
+						AdtComplexDomain domain = (AdtComplexDomain) atdDomain;
+						result = (Type) domain.calc(a, b, root);
+					} else {
+						result = atdDomain.calc(result, evaluate((ADTNode) root.getChildren().get(i), valuesMap),
+								root.getType());
+					}
         }
       }
     }
