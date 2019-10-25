@@ -3,12 +3,18 @@ package lu.uni.adtool.domains.adtpredefined;
 import ax1.CalculatorWorstCase;
 import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
+import lu.uni.adtool.domains.ValueAssignement;
 import lu.uni.adtool.domains.rings.Complex;
+import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tools.Options;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 
-public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain {
+public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public ProbSucc2() {
 	}
@@ -45,8 +51,8 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain {
 	}
 
 	@Override
-	public Complex calc(Complex a, Complex b, ADTNode node) {
-		return CalculatorWorstCase.calc(a, b, node);
+	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values) {
+		return CalculatorWorstCase.calc(a, b, node, values);
 	}
 
 	@Override
