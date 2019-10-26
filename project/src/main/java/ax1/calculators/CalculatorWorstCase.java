@@ -1,11 +1,11 @@
-package ax1;
+package ax1.calculators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import ax1.variables.Complex;
 import lu.uni.adtool.domains.ValueAssignement;
-import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
@@ -40,7 +40,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 		// TODO ARF: if countermeasure!="" the proponent anulates the opponent so result
 		// is proponent values
 		// TODO ARF: esto hay que mirarlo porque el otro puede ser logico pero este no
-		// tanto porque cual de a b es la contrameedida?
+		// tanto porque cual de a b es la contramedida?
 		return (Complex) a.clone();
 	}
 

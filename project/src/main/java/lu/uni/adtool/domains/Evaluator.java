@@ -22,7 +22,7 @@ package lu.uni.adtool.domains;
 
 import java.util.HashMap;
 
-import lu.uni.adtool.domains.rings.Complex;
+import ax1.variables.Complex;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;

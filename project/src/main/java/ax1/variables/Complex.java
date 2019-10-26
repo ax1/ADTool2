@@ -1,4 +1,6 @@
-package lu.uni.adtool.domains.rings;
+package ax1.variables;
+
+import lu.uni.adtool.domains.rings.Ring;
 
 public class Complex implements Ring {
 

@@ -30,13 +30,13 @@ import org.reflections.Reflections;
 
 import lu.uni.adtool.domains.adtpredefined.DiffLMH;
 import lu.uni.adtool.domains.adtpredefined.DiffLMHE;
+import lu.uni.adtool.domains.adtpredefined.DomainComplex;
 import lu.uni.adtool.domains.adtpredefined.MinCost;
 import lu.uni.adtool.domains.adtpredefined.MinSkill;
 import lu.uni.adtool.domains.adtpredefined.MinTimePar;
 import lu.uni.adtool.domains.adtpredefined.MinTimeSeq;
 import lu.uni.adtool.domains.adtpredefined.PowerCons;
 import lu.uni.adtool.domains.adtpredefined.ProbSucc;
-import lu.uni.adtool.domains.adtpredefined.ProbSucc2;
 import lu.uni.adtool.domains.adtpredefined.ReachPar;
 import lu.uni.adtool.domains.adtpredefined.ReachSeq;
 import lu.uni.adtool.domains.adtpredefined.SatOpp;
@@ -185,7 +185,7 @@ public abstract class AtdDomainFactory {
 			result.add(new MinSkill());
 			result.add(new DiffLMHE());
 			result.add(new ProbSucc());
-			result.add(new ProbSucc2());
+			result.add(new DomainComplex());
 			result.add(new ReachSeq());
 			result.add(new MinCost());
 		}
@@ -196,6 +196,6 @@ public abstract class AtdDomainFactory {
 			"IntMinSum", "ProbPlusTimes", "RealG0MinSumCost", "RealG0MinSumParallel", "RealG0MinSum", "RealG0MaxSum",
 			"SkillAtdDomainLMHE", "SkillAtdDomain" };
 	private static final String[] newNames = { "SatScenario", "SattOpp", "SatProp", "ReachPar", "MinSkill", "ReachSeq",
-			"ProbSucc", "ProbSucc2", "MinCost", "MinTimePar", "MinTimeSeq", "PowerCons", "DiffLMHE", "DiffLMH" };
+			"ProbSucc", "DomainComplex", "MinCost", "MinTimePar", "MinTimeSeq", "PowerCons", "DiffLMHE", "DiffLMH" };
 	private static final String domainsPrefix = "lu.uni.adtool.domains.adtpredefined";
 }

@@ -1,4 +1,4 @@
-package ax1;
+package ax1.calculators;
 
 public class CalculatorComplexFactory {
 	public static CalculatorComplex create(String name) {

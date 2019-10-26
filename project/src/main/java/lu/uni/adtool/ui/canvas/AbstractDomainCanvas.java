@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 
 import org.abego.treelayout.util.DefaultConfiguration;
 
+import ax1.variables.Complex;
 import lu.uni.adtool.adtree.ADTreeNode;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.Domain;
@@ -36,7 +37,6 @@ import lu.uni.adtool.domains.ValuationDomain;
 import lu.uni.adtool.domains.custom.AdtRealDomain;
 import lu.uni.adtool.domains.rings.Bool;
 import lu.uni.adtool.domains.rings.BoundedInteger;
-import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Int;
 import lu.uni.adtool.domains.rings.LMHEValue;
 import lu.uni.adtool.domains.rings.LMHValue;

@@ -2,24 +2,24 @@ package lu.uni.adtool.domains.adtpredefined;
 
 import java.util.HashMap;
 
-import ax1.CalculatorComplex;
-import ax1.CalculatorComplexFactory;
+import ax1.calculators.CalculatorComplex;
+import ax1.calculators.CalculatorComplexFactory;
+import ax1.variables.Complex;
 import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.ValueAssignement;
-import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tools.Options;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 
-public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
+public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
 
 	private CalculatorComplex calculator;
 
 	private static final long serialVersionUID = 1L;
 
-	public ProbSucc2() {
+	public DomainComplex() {
 		calculator = CalculatorComplexFactory.create("worstCase"); // TODO the string param can be get fronm setting env
 																	// variable, or using the class name or wathever
 																	// other options
@@ -30,11 +30,11 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
 	}
 
 	public final String getName() {
-		return Options.getMsg("adtdomain.probsucc2.name");
+		return Options.getMsg("adtdomain.complex.name");
 	}
 
 	public final String getDescription() {
-		final String name = Options.getMsg("adtdomain.probsucc2.description");
+		final String name = Options.getMsg("adtdomain.complex.description");
 		final String vd = "[0,1]";
 		final String[] operators = { "<i>x</i>&nbsp;+&nbsp;<i>y</i>", "<i>x</i><i>y</i>",
 				"<i>x</i>&nbsp;+&nbsp;<i>y</i>", "<i>x</i><i>y</i>", "<i>x</i>(1&nbsp;-&nbsp;<i>y</i>)",
@@ -52,7 +52,7 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
 	@Override
 	public Complex calc(Complex a, Complex b, ADTNode.Type type) {
 		System.out.println(
-				"@@@@DEVELOPER ERROR@@@@: calc(a,b,type) should not be called on compex domains, Use calc(a,b,bode) instead");
+				"@@@@DEVELOPER ERROR@@@@: calc(a,b,type) should not be called on complex domains, Use calc(a,b,bode) instead");
 		return new Complex(String.valueOf(counter++));
 	}
 
