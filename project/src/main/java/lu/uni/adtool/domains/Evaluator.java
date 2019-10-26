@@ -117,7 +117,7 @@ public class Evaluator<Type extends Ring> {
 						Complex a = (Complex) result;
 						Complex b = (Complex) evaluate((ADTNode) root.getChildren().get(i), valuesMap);
 						AdtComplexDomain domain = (AdtComplexDomain) atdDomain;
-						result = (Type) domain.calc(a, b, root, (ValueAssignement<Ring>) valuesMap);
+						result = (Type) domain.calc(a, b, root, (ValueAssignement<Ring>) valuesMap, resultMap);
 					} else {
 						result = atdDomain.calc(result, evaluate((ADTNode) root.getChildren().get(i), valuesMap),
 								root.getType());

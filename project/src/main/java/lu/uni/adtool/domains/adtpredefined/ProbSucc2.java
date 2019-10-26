@@ -1,5 +1,7 @@
 package lu.uni.adtool.domains.adtpredefined;
 
+import java.util.HashMap;
+
 import ax1.CalculatorWorstCase;
 import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
@@ -51,18 +53,18 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
 	}
 
 	@Override
-	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values) {
-		return CalculatorWorstCase.calc(a, b, node, values);
+	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
+		return CalculatorWorstCase.calc(a, b, node, values, map);
 	}
 
 	@Override
 	public Complex cp(Complex a, Complex b) {
-		return new Complex();
+		return CalculatorWorstCase.cp(a, b);
 	}
 
 	@Override
 	public Complex co(Complex a, Complex b) {
-		return new Complex();
+		return CalculatorWorstCase.co(a, b);
 	}
 
 }

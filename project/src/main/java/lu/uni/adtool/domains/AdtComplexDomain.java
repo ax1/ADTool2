@@ -1,8 +1,11 @@
 package lu.uni.adtool.domains;
 
+import java.util.HashMap;
+
 import lu.uni.adtool.domains.rings.Complex;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
+import lu.uni.adtool.tree.Node;
 
 public interface AdtComplexDomain<Type extends Ring> {
 	/**
@@ -17,5 +20,6 @@ public interface AdtComplexDomain<Type extends Ring> {
 	 * @param type
 	 * @return
 	 */
-	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Type> values);
+	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Type> values,
+			HashMap<Node, Type> resultMap);
 }
