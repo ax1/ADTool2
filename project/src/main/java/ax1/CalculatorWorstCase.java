@@ -10,73 +10,33 @@ import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 
-public class CalculatorWorstCase {
+public class CalculatorWorstCase extends CalculatorComplex {
 
-	public static Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values,
-			HashMap<Node, Ring> map) {
-		try {
-			ADTNode.Type type = node.getType();
-			switch (type) {
-			case OR_OPP:
-				return or_opp(a, b, node, values, map);
-			case AND_OPP:
-				return and_opp(a, b, node, values, map);
-			case OR_PRO:
-				return or_pro(a, b, node, values, map);
-			case AND_PRO:
-				return and_pro(a, b, node, values, map);
-			default:
-				throw new Exception("@@@@DEVELOPER ERROR@@@@:  not implemented");
-			}
-		} catch (Exception e) {
-			// e.printStackTrace();
-			return new Complex("");
-		}
-	}
-
-	public static Complex and_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values,
-			HashMap<Node, Ring> map) {
+	public Complex and_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		List<double[]> vectors = getVectors(node, values, true, map);
 		return calcAND(vectors);
 	}
 
-	public static Complex or_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values,
-			HashMap<Node, Ring> map) {
+	public Complex or_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		return calcOR(a, b);
 	}
 
-	public static Complex and_opp(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values,
-			HashMap<Node, Ring> map) {
+	public Complex and_opp(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		List<double[]> vectors = getVectors(node, values, false, map);
 		return calcAND(vectors);
 	}
 
-	public static Complex or_opp(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values,
-			HashMap<Node, Ring> map) {
+	public Complex or_opp(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		return calcOR(a, b);
 	}
 
-	/**
-	 * Countermeasure of the opponent
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static Complex co(Complex a, Complex b) {
+	public Complex counter_opp(Complex a, Complex b) {
 		// TODO ARF: if countermeasure!="" the oponent blocked the proponent so result
 		// is default value
 		return new Complex("");
 	}
 
-	/**
-	 * Countermeasure of the proponent
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static Complex cp(Complex a, Complex b) {
+	public Complex counter_pro(Complex a, Complex b) {
 		// TODO ARF: if countermeasure!="" the proponent anulates the opponent so result
 		// is proponent values
 		// TODO ARF: esto hay que mirarlo porque el otro puede ser logico pero este no
@@ -97,10 +57,6 @@ public class CalculatorWorstCase {
 
 	/**
 	 * Return the Complex one with the higher risk
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
 	 */
 	private static Complex calcOR(Complex a, Complex b) {
 		double[] v1 = a.toVector();

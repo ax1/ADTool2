@@ -2,7 +2,8 @@ package lu.uni.adtool.domains.adtpredefined;
 
 import java.util.HashMap;
 
-import ax1.CalculatorWorstCase;
+import ax1.CalculatorComplex;
+import ax1.CalculatorComplexFactory;
 import lu.uni.adtool.domains.AdtComplexDomain;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.ValueAssignement;
@@ -13,12 +14,15 @@ import lu.uni.adtool.tree.ADTNode;
 import lu.uni.adtool.tree.Node;
 
 public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
-	/**
-	 * 
-	 */
+
+	private CalculatorComplex calculator;
+
 	private static final long serialVersionUID = 1L;
 
 	public ProbSucc2() {
+		calculator = CalculatorComplexFactory.create("worstCase"); // TODO the string param can be get fronm setting env
+																	// variable, or using the class name or wathever
+																	// other options
 	}
 
 	public final boolean isValueModifiable(boolean isProponent) {
@@ -54,17 +58,17 @@ public class ProbSucc2 implements AdtDomain<Complex>, AdtComplexDomain<Ring> {
 
 	@Override
 	public Complex calc(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
-		return CalculatorWorstCase.calc(a, b, node, values, map);
+		return calculator.calc(a, b, node, values, map);
 	}
 
 	@Override
 	public Complex cp(Complex a, Complex b) {
-		return CalculatorWorstCase.cp(a, b);
+		return calculator.counter_opp(a, b);
 	}
 
 	@Override
 	public Complex co(Complex a, Complex b) {
-		return CalculatorWorstCase.co(a, b);
+		return calculator.counter_pro(a, b);
 	}
 
 }
