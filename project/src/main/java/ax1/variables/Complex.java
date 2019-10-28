@@ -11,7 +11,7 @@ public class Complex implements Ring {
 	}
 
 	/**
-	 * N dimensional complex value
+	 * N dimension complex value
 	 * 
 	 * @param value format: "r1,r2,r3..." or "r1, r2, r3..." where r1 r2 r3... are
 	 *              double numbers
@@ -21,7 +21,16 @@ public class Complex implements Ring {
 	}
 
 	public final String toString() {
-		return value;
+		try {
+			if (value.equals(""))
+				return value;
+			double[] v = toVector();
+			double res = v[0] * v[1] / v[2];
+			return v[0] + ", " + v[1] + ", " + v[2] + ", " + String.format("%.2f", res);
+		} catch (Exception e) {
+			return value;
+		}
+
 	}
 
 	@Override
