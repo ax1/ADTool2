@@ -14,7 +14,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 
 	public Complex and_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		List<double[]> vectors = getVectors(node, values, true, map);
-		return calcAND(vectors);
+		return calcAND(vectors); 
 	}
 
 	public Complex or_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
@@ -31,17 +31,33 @@ public class CalculatorWorstCase extends CalculatorComplex {
 	}
 
 	public Complex counter_opp(Complex a, Complex b) {
-		// TODO ARF: if countermeasure!="" the opponent blocked the proponent so result
-		// is default value
-		return new Complex("");
+		try {
+			double[] v1 = a.toVector();
+			double[] v2 = b.toVector();
+			double prob = v1[0] * (1 - v2[0]);
+			double impact = v1[1] * v2[1] / 10d;
+			double cost = v1[2] < v2[2] ? v1[2] : v2[2];
+			String text = Double.toString(prob) + ", " + Double.toString(impact) + ", " + Double.toString(cost);
+			return new Complex(text);
+		}catch(Exception e) {
+			return new Complex("");
+		}
+
 	}
 
 	public Complex counter_pro(Complex a, Complex b) {
-		// TODO ARF: if countermeasure!="" the proponent anulates the opponent so result
-		// is proponent values
-		// TODO ARF: esto hay que mirarlo porque el otro puede ser logico pero este no
-		// tanto porque cual de a b es la contramedida?
-		return (Complex) a.clone();
+		try {
+			double[] v1 = a.toVector();
+			double[] v2 = b.toVector();
+			double prob = v1[0] * (1 - v2[0]);
+			double impact = v1[1] * v2[1] / 10d;
+			double cost=1E6;
+			String text = Double.toString(prob) + ", " + Double.toString(impact) + ", " + Double.toString(cost);
+			return new Complex(text);
+		}catch(Exception e) {
+			return new Complex("");
+		}
+
 	}
 
 	/**
@@ -66,7 +82,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 //		return risk1 > risk2 ? (Complex) a.clone() : (Complex) b.clone();
 //	}
 
-	/* author:arx1&erkuden
+	/* 
 	 * Return the Complex one with the higher risk, if risks are equal, return the Complex one with higher A=probability,  
 	 * and if A are equal too, return the one with higher B=impact. 
 	 * and if A and B are equal too, C= cost is equal too, return the first Complex one.
