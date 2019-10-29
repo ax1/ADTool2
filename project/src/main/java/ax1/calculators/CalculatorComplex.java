@@ -34,7 +34,7 @@ public abstract class CalculatorComplex implements ICalculatorComplex {
 	}
 
 	/**
-	 * Get complex value as array[a,b,c...] for all child nodesthat are not
+	 * Get complex value as array[a,b,c...] for all child nodes that are not
 	 * countermeasures
 	 * 
 	 * @param node        the node to get childs data

@@ -31,7 +31,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 	}
 
 	public Complex counter_opp(Complex a, Complex b) {
-		// TODO ARF: if countermeasure!="" the oponent blocked the proponent so result
+		// TODO ARF: if countermeasure!="" the opponent blocked the proponent so result
 		// is default value
 		return new Complex("");
 	}
@@ -45,7 +45,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 	}
 
 	/**
-	 * Return [probs, impacts,costs] as complex variable
+	 * Return [probs,impacts,costs] as Complex variable
 	 **/
 	private static Complex calcAND(List<double[]> vectors) {
 		double A = A(vectors);
@@ -55,17 +55,34 @@ public class CalculatorWorstCase extends CalculatorComplex {
 		return new Complex(text);
 	}
 
-	/**
-	 * Return the Complex one with the higher risk
+//	/**
+//	 * Return the Complex one with the higher risk
+//	 */
+//	private static Complex calcOR(Complex a, Complex b) {
+//		double[] v1 = a.toVector();
+//		double[] v2 = b.toVector();
+//		double risk1 = v1[0] * v1[1] / v1[2];
+//		double risk2 = v2[0] * v2[1] / v2[2];
+//		return risk1 > risk2 ? (Complex) a.clone() : (Complex) b.clone();
+//	}
+
+	/* author:arx1&erkuden
+	 * Return the Complex one with the higher risk, if risks are equal, return the Complex one with higher A=probability,  
+	 * and if A are equal too, return the one with higher B=impact. 
+	 * and if A and B are equal too, C= cost is equal too, return the first Complex one.
 	 */
 	private static Complex calcOR(Complex a, Complex b) {
 		double[] v1 = a.toVector();
 		double[] v2 = b.toVector();
 		double risk1 = v1[0] * v1[1] / v1[2];
 		double risk2 = v2[0] * v2[1] / v2[2];
+		if ( risk1 == risk2 ) {
+			if (v1[0] == v2[0]) { return v1[1] > v2[1] ? (Complex) a.clone() : (Complex) b.clone(); } //return the one with higher B
+			return v1[0] > v2[0] ? (Complex) a.clone() : (Complex) b.clone(); //return the one with higher A
+		}
 		return risk1 > risk2 ? (Complex) a.clone() : (Complex) b.clone();
 	}
-
+	
 	private static double A(List<double[]> vectors) {
 		double res = 1;
 		for (double[] vector : vectors)
