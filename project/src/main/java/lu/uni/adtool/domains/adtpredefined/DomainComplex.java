@@ -63,12 +63,12 @@ public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring>
 
 	@Override
 	public Complex cp(Complex a, Complex b) {
-		return calculator.counter_opp(a, b);
+		return calculator.counter_pro(a, b);
 	}
 
 	@Override
 	public Complex co(Complex a, Complex b) {
-		return calculator.counter_pro(a, b);
+		return calculator.counter_opp(a, b);
 	}
 
 }
