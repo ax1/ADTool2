@@ -20,8 +20,8 @@ public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring>
 	private static final long serialVersionUID = 1L;
 
 	public DomainComplex() {
-		calculator = CalculatorComplexFactory.create("worstCase"); // TODO the string param can be get fronm setting env
-																	// variable, or using the class name or wathever
+		calculator = CalculatorComplexFactory.create("worstCase"); // TODO the string param can be get from setting environment
+																	// variable, or using the class name or whatever
 																	// other options
 	}
 
@@ -35,7 +35,7 @@ public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring>
 
 	public final String getDescription() {
 		final String name = Options.getMsg("adtdomain.complex.description");
-		final String vd = "[0,1]";
+		final String vd = "prob [0,1], impact [0,10], cost [0,\u221E]";
 		final String[] operators = { "<i>x</i>&nbsp;+&nbsp;<i>y</i>", "<i>x</i><i>y</i>",
 				"<i>x</i>&nbsp;+&nbsp;<i>y</i>", "<i>x</i><i>y</i>", "<i>x</i>(1&nbsp;-&nbsp;<i>y</i>)",
 				"<i>x</i>(1&nbsp;-&nbsp;<i>y</i>)" };
@@ -52,7 +52,7 @@ public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring>
 	@Override
 	public Complex calc(Complex a, Complex b, ADTNode.Type type) {
 		System.out.println(
-				"@@@@DEVELOPER ERROR@@@@: calc(a,b,type) should not be called on complex domains, Use calc(a,b,bode) instead");
+				"@@@@DEVELOPER ERROR@@@@: calc(a,b,type) should not be called on complex domains, Use calc(a,b,node) instead");
 		return new Complex(String.valueOf(counter++));
 	}
 
@@ -63,12 +63,12 @@ public class DomainComplex implements AdtDomain<Complex>, AdtComplexDomain<Ring>
 
 	@Override
 	public Complex cp(Complex a, Complex b) {
-		return calculator.counter_opp(a, b);
+		return calculator.counter_pro(a, b);
 	}
 
 	@Override
 	public Complex co(Complex a, Complex b) {
-		return calculator.counter_pro(a, b);
+		return calculator.counter_opp(a, b);
 	}
 
 }

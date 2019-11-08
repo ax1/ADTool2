@@ -10,7 +10,7 @@ import lu.uni.adtool.tree.Node;
 public interface AdtComplexDomain<Type extends Ring> {
 	/**
 	 * Allow calculations by using information from node structure, related, etc.
-	 * This allow for multipurpose calculations.
+	 * This allows for multi-purpose calculations.
 	 * 
 	 * Note, the node parameter should be treated as read-only exclusively. To
 	 * modify node data use the existing visual features.
