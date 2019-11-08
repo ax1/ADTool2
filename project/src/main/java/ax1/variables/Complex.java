@@ -1,5 +1,7 @@
 package ax1.variables;
 
+import java.util.Locale;
+
 import lu.uni.adtool.domains.rings.Ring;
 
 public class Complex implements Ring {
@@ -26,11 +28,10 @@ public class Complex implements Ring {
 				return value;
 			double[] v = toVector();
 			double res = v[0] * v[1] / v[2];
-			return v[0] + ", " + v[1] + ", " + v[2] + ", " + String.format("%.2f", res);
+			return v[0] + ", " + v[1] + ", " + v[2] + ", " + String.format(Locale.US, "%.2f", res);
 		} catch (Exception e) {
 			return value;
 		}
-
 	}
 
 	@Override
