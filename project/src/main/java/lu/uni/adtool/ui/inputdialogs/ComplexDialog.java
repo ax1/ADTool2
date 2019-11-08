@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
+import javax.swing.text.DefaultFormatter;
 
 public class ComplexDialog extends InputDialog {
 
@@ -25,7 +26,10 @@ public class ComplexDialog extends InputDialog {
 //		final NumberFormat f = NumberFormat.getInstance();
 //		f.setParseIntegerOnly(true);
 //		valueField = new JFormattedTextField(f);
-		valueField = new JFormattedTextField();
+		DefaultFormatter format = new DefaultFormatter();
+		format.setOverwriteMode(false);
+
+		valueField = new JFormattedTextField(format);
 		valueField.addKeyListener(this);
 		if (showDefault) {
 			valueField.setValue(value);
