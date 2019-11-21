@@ -19,7 +19,7 @@ public class Complex implements Ring {
 	 *              double numbers
 	 */
 	public Complex(String value) {
-		this.value = value;
+		this.value = normalize(value);
 	}
 
 	public final String toString() {
@@ -28,7 +28,7 @@ public class Complex implements Ring {
 				return value;
 			double[] v = toVector();
 			double res = v[0] * v[1] / v[2];
-			return v[0] + ", " + v[1] + ", " + v[2] + ", " + String.format(Locale.US, "%.2f", res);
+			return f(v[0]) + ", " + f(v[1]) + ", " + f(v[2]) + ", " + f(res);
 		} catch (Exception e) {
 			return value;
 		}
@@ -56,10 +56,37 @@ public class Complex implements Ring {
 	}
 
 	public double[] toVector() {
+		return toVector(this.value);
+	}
+
+	private static double[] toVector(String value) {
 		String[] data = value.replace(" ", "").split(",");
 		double[] arr = new double[data.length];
 		for (int r = 0; r < data.length; r++)
 			arr[r] = Double.valueOf(data[r]);
 		return arr;
 	}
+
+	/**
+	 * Transform a complex 3D value into a 4D value (and shrink to 2 decimals)
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private static final String normalize(String value) {
+		try {
+			if (value.equals(""))
+				return value;
+			double[] v = toVector(value);
+			double res = v[0] * v[1] / v[2];
+			return f(v[0]) + ", " + f(v[1]) + ", " + f(v[2]) + ", " + f(res);
+		} catch (Exception e) {
+			return value;
+		}
+	}
+
+	private static String f(double val) {
+		return String.format(Locale.US, "%.2f", val);
+	}
+
 }
