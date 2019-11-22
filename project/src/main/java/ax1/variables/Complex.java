@@ -15,7 +15,7 @@ public class Complex implements Ring {
 	/**
 	 * N dimension complex value
 	 * 
-	 * @param value format: "r1,r2,r3..." or "r1, r2, r3..." where r1 r2 r3... are
+	 * @param value format: "r1 r2 r3..." or "r1 r2 r3..." where r1 r2 r3... are
 	 *              double numbers
 	 */
 	public Complex(String value) {
@@ -28,7 +28,7 @@ public class Complex implements Ring {
 				return value;
 			double[] v = toVector();
 			double res = v[0] * v[1] / v[2];
-			return f(v[0]) + ", " + f(v[1]) + ", " + f(v[2]) + ", " + f(res);
+			return f(v[0]) + " " + f(v[1]) + " " + f(v[2]) + " " + f(res);
 		} catch (Exception e) {
 			return value;
 		}
@@ -41,7 +41,7 @@ public class Complex implements Ring {
 
 	@Override
 	public boolean updateFromString(String s) {
-		value = s;
+		value = MIGRATE(s);
 		return true;
 	}
 
@@ -60,7 +60,7 @@ public class Complex implements Ring {
 	}
 
 	private static double[] toVector(String value) {
-		String[] data = value.replace(" ", "").split(",");
+		String[] data = value.split(" ");
 		double[] arr = new double[data.length];
 		for (int r = 0; r < data.length; r++)
 			arr[r] = Double.valueOf(data[r]);
@@ -77,12 +77,19 @@ public class Complex implements Ring {
 		try {
 			if (value.equals(""))
 				return value;
+			value = MIGRATE(value);
 			double[] v = toVector(value);
 			double res = v[0] * v[1] / v[2];
-			return f(v[0]) + ", " + f(v[1]) + ", " + f(v[2]) + ", " + f(res);
+			return f(v[0]) + " " + f(v[1]) + " " + f(v[2]) + " " + f(res);
 		} catch (Exception e) {
 			return value;
 		}
+	}
+
+	private static String MIGRATE(String value) {
+		value = value.replace(",", " ");// TODO, ONLY FOR MIGRATION to new format
+		value = value.replace("  ", " "); // TODO, this can be removed after migration of OLD complex trees
+		return value.toString();
 	}
 
 	private static String f(double val) {

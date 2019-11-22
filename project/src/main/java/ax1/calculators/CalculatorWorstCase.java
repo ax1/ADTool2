@@ -14,7 +14,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 
 	public Complex and_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
 		List<double[]> vectors = getVectors(node, values, true, map);
-		return calcAND(vectors); 
+		return calcAND(vectors);
 	}
 
 	public Complex or_pro(Complex a, Complex b, ADTNode node, ValueAssignement<Ring> values, HashMap<Node, Ring> map) {
@@ -37,9 +37,9 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			double prob = v1[0] * (1 - v2[0]);
 			double impact = v1[1] * v2[1] / 10d;
 			double cost = v1[2] < v2[2] ? v1[2] : v2[2];
-			String text = Double.toString(prob) + ", " + Double.toString(impact) + ", " + Double.toString(cost);
+			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
 			return new Complex(text);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return new Complex("");
 		}
 
@@ -51,10 +51,10 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			double[] v2 = b.toVector();
 			double prob = v1[0] * (1 - v2[0]);
 			double impact = v1[1] * v2[1] / 10d;
-			double cost=1E6;
-			String text = Double.toString(prob) + ", " + Double.toString(impact) + ", " + Double.toString(cost);
+			double cost = 1E6;
+			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
 			return new Complex(text);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return new Complex("");
 		}
 
@@ -67,7 +67,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 		double A = A(vectors);
 		double B = B(vectors);
 		double C = C(vectors);
-		String text = Double.toString(A) + ", " + Double.toString(B) + ", " + Double.toString(C);
+		String text = Double.toString(A) + " " + Double.toString(B) + " " + Double.toString(C);
 		return new Complex(text);
 	}
 
@@ -82,23 +82,26 @@ public class CalculatorWorstCase extends CalculatorComplex {
 //		return risk1 > risk2 ? (Complex) a.clone() : (Complex) b.clone();
 //	}
 
-	/* 
-	 * Return the Complex one with the higher risk, if risks are equal, return the Complex one with higher A=probability,  
-	 * and if A are equal too, return the one with higher B=impact. 
-	 * and if A and B are equal too, C= cost is equal too, return the first Complex one.
+	/*
+	 * Return the Complex one with the higher risk, if risks are equal, return the
+	 * Complex one with higher A=probability, and if A are equal too, return the one
+	 * with higher B=impact. and if A and B are equal too, C= cost is equal too,
+	 * return the first Complex one.
 	 */
 	private static Complex calcOR(Complex a, Complex b) {
 		double[] v1 = a.toVector();
 		double[] v2 = b.toVector();
 		double risk1 = v1[0] * v1[1] / v1[2];
 		double risk2 = v2[0] * v2[1] / v2[2];
-		if ( risk1 == risk2 ) {
-			if (v1[0] == v2[0]) { return v1[1] > v2[1] ? (Complex) a.clone() : (Complex) b.clone(); } //return the one with higher B
-			return v1[0] > v2[0] ? (Complex) a.clone() : (Complex) b.clone(); //return the one with higher A
+		if (risk1 == risk2) {
+			if (v1[0] == v2[0]) {
+				return v1[1] > v2[1] ? (Complex) a.clone() : (Complex) b.clone();
+			} // return the one with higher B
+			return v1[0] > v2[0] ? (Complex) a.clone() : (Complex) b.clone(); // return the one with higher A
 		}
 		return risk1 > risk2 ? (Complex) a.clone() : (Complex) b.clone();
 	}
-	
+
 	private static double A(List<double[]> vectors) {
 		double res = 1;
 		for (double[] vector : vectors)
