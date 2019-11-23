@@ -32,7 +32,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
-import ax1.simulators.Simulator;
 import lu.uni.adtool.domains.AdtDomain;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tools.Options;
@@ -49,7 +48,6 @@ public class AdtDomainHandler<Type extends Ring> extends AbstractCanvasHandler {
 	public AdtDomainHandler(final AbstractDomainCanvas<Type> canvas) {
 		super(canvas);
 		initPopupMenu();
-		Simulator.canvas = (AbstractDomainCanvas<Ring>) canvas;
 	}
 
 	public void setFocus(final Node node) {
