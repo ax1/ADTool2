@@ -1,10 +1,12 @@
 package ax1.variables;
 
-import java.util.Locale;
+import java.text.DecimalFormat;
 
 import lu.uni.adtool.domains.rings.Ring;
 
 public class Complex implements Ring {
+
+	public static DecimalFormat df = new DecimalFormat("#.##");
 
 	private String value;
 
@@ -28,7 +30,7 @@ public class Complex implements Ring {
 				return value;
 			double[] v = toVector();
 			double res = v[0] * v[1] / v[2];
-			return f(v[0]) + " " + f(v[1]) + " " + f(v[2]) + " " + f(res);
+			return df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res);
 		} catch (Exception e) {
 			return value;
 		}
@@ -80,7 +82,7 @@ public class Complex implements Ring {
 			value = MIGRATE(value);
 			double[] v = toVector(value);
 			double res = v[0] * v[1] / v[2];
-			return f(v[0]) + " " + f(v[1]) + " " + f(v[2]) + " " + f(res);
+			return df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res);
 		} catch (Exception e) {
 			return value;
 		}
@@ -90,10 +92,6 @@ public class Complex implements Ring {
 		value = value.replace(",", " ");// TODO, ONLY FOR MIGRATION to new format
 		value = value.replace("  ", " "); // TODO, this can be removed after migration of OLD complex trees
 		return value.toString();
-	}
-
-	private static String f(double val) {
-		return String.format(Locale.US, "%.2f", val);
 	}
 
 }
