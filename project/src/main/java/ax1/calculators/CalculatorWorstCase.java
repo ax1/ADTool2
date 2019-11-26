@@ -51,7 +51,7 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			double[] v2 = b.toVector();
 			double prob = v1[0] * (1 - v2[0]);
 			double impact = v1[1] * v2[1] / 10d;
-			double cost = 1E6;
+			double cost = v1[2];
 			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
 			return new Complex(text);
 		} catch (Exception e) {
