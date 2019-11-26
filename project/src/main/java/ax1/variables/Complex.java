@@ -25,15 +25,7 @@ public class Complex implements Ring {
 	}
 
 	public final String toString() {
-		try {
-			if (value.equals(""))
-				return value;
-			double[] v = toVector();
-			double res = v[0] * v[1] / v[2];
-			return df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res);
-		} catch (Exception e) {
-			return value;
-		}
+		return normalize(value);
 	}
 
 	@Override
@@ -62,9 +54,10 @@ public class Complex implements Ring {
 	}
 
 	private static double[] toVector(String value) {
+		int SIZE = 3; // [prob, impact, cost,....]
 		String[] data = value.split(" ");
-		double[] arr = new double[data.length];
-		for (int r = 0; r < data.length; r++)
+		double[] arr = new double[SIZE];
+		for (int r = 0; r < SIZE; r++)
 			arr[r] = Double.valueOf(data[r]);
 		return arr;
 	}
@@ -80,9 +73,14 @@ public class Complex implements Ring {
 			if (value.equals(""))
 				return value;
 			value = MIGRATE(value);
+			value = value.trim();
 			double[] v = toVector(value);
+			String[] data = value.split(" ");
 			double res = v[0] * v[1] / v[2];
-			return df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res);
+			String rest = data.length > 4 ? data[4] : "";
+			String out = df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res) + " "
+					+ rest;
+			return out;
 		} catch (Exception e) {
 			return value;
 		}

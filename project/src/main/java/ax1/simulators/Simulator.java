@@ -1,5 +1,7 @@
 package ax1.simulators;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import ax1.variables.Complex;
@@ -21,31 +23,31 @@ public class Simulator {
 	public static ADToolMain main;
 
 	public static void simulate() {
-		log("SIMULATION STARTED!");
-
+		log("-----SIMULATION STARTED!-----");
+		Map<String, Complex> candidates = new HashMap<>();
 		// ---------------- PREPARE SIMULATION (variables)----------------
 		AbstractDomainCanvas<Ring> canvas = (AbstractDomainCanvas<Ring>) main.getController().getLastFocusedTree();
 		ValuationDomain valuation = canvas.getValues();
 		ValueAssignement<Ring> map = canvas.getValues().getValueMap();
 		Set<String> opponents = map.keySet(false);
 		for (String key : opponents) {
-			log(key);
-			if (key.equals("Memorize"))
-				changeValue(map.get(false, key)); // DEMO, change a value in background
+			Complex complex = (Complex) map.get(false, key);
+			if (complex.toString().contains("*")) {
+				candidates.put(key, complex);
+				log("candidate: " + key);
+			}
 		}
 
 		// ----------------START SIMULATION-----------------------------------------
 		// Node root = canvas.getTree().getRoot(true);
-		canvas.valuesUpdated(false); // This is better than valuation.refreshAllValues(root)
-
-		log("SIMULATION FINISHED!");
-	}
-
-	public static void changeValue(Ring val) {
-		if (val instanceof Complex) {
-			Complex complex = (Complex) val;
-			complex.updateFromString("2 1 1");
+		for (String key : candidates.keySet()) {
+			// do whatever
+			// complex.updateFromString("0.1 1 1 *"); // DEMO, change a value in background
+			// recalculate tre
+			canvas.valuesUpdated(false); // This is better than valuation.refreshAllValues(root)
 		}
+
+		log("-----SIMULATION FINISHED------");
 	}
 
 	public static void log(String message) {
