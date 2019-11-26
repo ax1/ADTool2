@@ -36,7 +36,8 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			double[] v2 = b.toVector();
 			double prob = v1[0] * (1 - v2[0]);
 			double impact = v1[1] * v2[1] / 10d;
-			double cost = v1[2] < v2[2] ? v1[2] : v2[2];
+			double cost = v2[2]; // The resulting cost is always from the viewer point of view (attacker
+									// view->cost of attacker)
 			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
 			return new Complex(text);
 		} catch (Exception e) {
@@ -51,7 +52,8 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			double[] v2 = b.toVector();
 			double prob = v1[0] * (1 - v2[0]);
 			double impact = v1[1] * v2[1] / 10d;
-			double cost = v1[2];
+			double cost = v1[2]; // The resulting cost is always from the viewer point of view (attacker
+									// view->cost of attacker)
 			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
 			return new Complex(text);
 		} catch (Exception e) {
