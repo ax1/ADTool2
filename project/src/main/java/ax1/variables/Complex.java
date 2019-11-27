@@ -6,7 +6,7 @@ import lu.uni.adtool.domains.rings.Ring;
 
 public class Complex implements Ring {
 
-	public static final DecimalFormat df = new DecimalFormat("#.##");
+	public static DecimalFormat df = new DecimalFormat("#.##");
 
 	private String value;
 
@@ -78,12 +78,19 @@ public class Complex implements Ring {
 			String[] data = value.split(" ");
 			double res = v[0] * v[1] / v[2];
 			String rest = data.length > 4 ? data[4] : "";
-			String out = df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]) + " " + df.format(res) + " "
-					+ rest;
+			String out = f(v[0]) + " " + f(v[1]) + " " + f(v[2]) + " " + f(res) + " " + rest;
 			return out;
 		} catch (Exception e) {
 			return value;
 		}
+	}
+
+	/**
+	 * Method to stringify a double into 0-2 decimals but agnostic to the current
+	 * locale.
+	 */
+	public static String f(double d) {
+		return df.format(d).replace(",", ".");
 	}
 
 	private static String MIGRATE(String value) {
