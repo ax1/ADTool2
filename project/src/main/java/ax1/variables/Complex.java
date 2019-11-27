@@ -6,7 +6,7 @@ import lu.uni.adtool.domains.rings.Ring;
 
 public class Complex implements Ring {
 
-	public static DecimalFormat df = new DecimalFormat("#.##");
+	public static final DecimalFormat df = new DecimalFormat("#.##");
 
 	private String value;
 
