@@ -133,12 +133,34 @@ public class CalculatorWorstCase extends CalculatorComplex {
 		List<Node> childs = node.getNotNullChildren();
 		for (int r = 0; r < childs.size(); r++) {
 			ADTNode child = (ADTNode) childs.get(r);
-			if (!child.isCountered()) {
-				Complex complex = (Complex) map.get(child);
-				vectors.add(complex.toVector());
-			}
+			Complex complex = getDerivedComplex(child, values, isProponent, map);
+			vectors.add(complex.toVector());
 		}
 		return vectors;
+	}
+
+	/**
+	 * Get the complex value given a node. This can be in different places depending
+	 * if related nodes are filled, the type, etc Please note that some nodes can
+	 * have two complex(nodes with countermeasures. In this case, the merged complex
+	 * is retrieved
+	 * 
+	 * @param node
+	 * @param values
+	 * @param isProponent
+	 * @param map
+	 */
+	private static Complex getDerivedComplex(ADTNode node, ValueAssignement<Ring> values, boolean isProponent,
+			HashMap<Node, Ring> map) {
+		Complex complex = (Complex) map.get(node);
+		if (complex != null && complex.toString().equals("") == false) {
+			return complex;
+		} else {
+			complex = (Complex) values.get(isProponent, node.getName());
+			if (complex == null)
+				complex = new Complex();
+		}
+		return complex;
 	}
 
 }
