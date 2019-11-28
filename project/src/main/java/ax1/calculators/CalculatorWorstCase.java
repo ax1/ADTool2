@@ -8,6 +8,7 @@ import ax1.variables.Complex;
 import lu.uni.adtool.domains.ValueAssignement;
 import lu.uni.adtool.domains.rings.Ring;
 import lu.uni.adtool.tree.ADTNode;
+import lu.uni.adtool.tree.ADTNode.Role;
 import lu.uni.adtool.tree.Node;
 
 public class CalculatorWorstCase extends CalculatorComplex {
@@ -33,33 +34,50 @@ public class CalculatorWorstCase extends CalculatorComplex {
 	public Complex counter_opp(Complex a, Complex b) {
 		try {
 			double[] v1 = a.toVector();
-			double[] v2 = b.toVector();
-			double prob = v1[0] * (1 - v2[0]);
-			double impact = v1[1] * v2[1] / 10d;
-			double cost = v2[2]; // The resulting cost is always from the viewer point of view (attacker
-									// view->cost of attacker)
-			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
-			return new Complex(text);
+			double[] v2;
+			try {
+				v2 = b.toVector();
+			} catch (Exception e) {
+				v2 = new double[3];
+			}
+			// if counter probability = 0 the propagated complex should be the node itself
+			if (v2[0] == 0) {
+				return new Complex(
+						Double.toString(v1[0]) + " " + Double.toString(v1[1]) + " " + Double.toString(v1[2]));
+			} else {
+				double prob = v1[0] * (1 - v2[0]);
+				double impact = v1[1] * v2[1] / 10d;
+				double cost = v1[2]; // the cost of the box should not vary
+				return new Complex(Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost));
+			}
 		} catch (Exception e) {
 			return new Complex("");
 		}
-
 	}
 
 	public Complex counter_pro(Complex a, Complex b) {
 		try {
 			double[] v1 = a.toVector();
-			double[] v2 = b.toVector();
-			double prob = v1[0] * (1 - v2[0]);
-			double impact = v1[1] * v2[1] / 10d;
-			double cost = v1[2]; // The resulting cost is always from the viewer point of view (attacker
-									// view->cost of attacker)
-			String text = Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost);
-			return new Complex(text);
+			double[] v2;
+			try {
+				v2 = b.toVector();
+			} catch (Exception e) {
+				v2 = new double[3];
+			}
+			// if counter probability = 0 the propagated complex should be the node itself
+			if (v2[0] == 0) {
+				return new Complex(
+						Double.toString(v1[0]) + " " + Double.toString(v1[1]) + " " + Double.toString(v1[2]));
+			} else {
+				double prob = v1[0] * (1 - v2[0]);
+				double impact = v1[1] * v2[1] / 10d;
+				double cost = v1[2]; // The resulting cost is always from the viewer point of view (attacker
+										// view->cost of attacker)
+				return new Complex(Double.toString(prob) + " " + Double.toString(impact) + " " + Double.toString(cost));
+			}
 		} catch (Exception e) {
 			return new Complex("");
 		}
-
 	}
 
 	/**
@@ -131,8 +149,18 @@ public class CalculatorWorstCase extends CalculatorComplex {
 			HashMap<Node, Ring> map) {
 		List<double[]> vectors = new ArrayList<>();
 		List<Node> childs = node.getNotNullChildren();
-		for (int r = 0; r < childs.size(); r++) {
-			ADTNode child = (ADTNode) childs.get(r);
+		// remove childs with different role than parent because they will be calculated
+		// as counter_opp or counter_prop later
+		List<ADTNode> realChilds = new ArrayList<>();
+		Role role = isProponent ? Role.PROPONENT : Role.OPPONENT;
+		for (Node n : childs) {
+			ADTNode child = (ADTNode) n;
+			if (child.getRole().equals(role))
+				realChilds.add(child);
+		}
+
+		// get vector for all valid child nodes
+		for (ADTNode child : realChilds) {
 			Complex complex = getDerivedComplex(child, values, isProponent, map);
 			vectors.add(complex.toVector());
 		}
