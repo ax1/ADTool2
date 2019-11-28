@@ -67,6 +67,7 @@ public class Simulator {
 			double value = 0;
 			for (int r = 0; r <= 10; r++) {
 				String line = "";
+
 				for (String key : candidates.keySet()) {
 					Complex complex = candidates.get(key);
 					if (complex.toString().split(" ").length < 3)
@@ -76,8 +77,9 @@ public class Simulator {
 					Complex temp = new Complex(Complex.f(v[0]) + " " + Complex.f(v[1]) + " " + Complex.f(v[2]));
 					complex.updateFromString(temp.toString());
 					line = line + Complex.f(value) + " ";
+					canvas.valuesUpdated(false); // This is better than valuation.refreshAllValues(root)
 				}
-				canvas.valuesUpdated(false); // This is better than valuation.refreshAllValues(root)
+
 				complexRoot = (Complex) valuation.getTermValue(root);
 				line = line + complexRoot.toString();
 				results.add(line);
