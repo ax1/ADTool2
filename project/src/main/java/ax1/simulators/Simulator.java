@@ -1,6 +1,5 @@
 package ax1.simulators;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,7 +27,6 @@ import lu.uni.adtool.ui.canvas.AbstractDomainCanvas;
 public class Simulator {
 
 	public static ADToolMain main;
-	public static final DecimalFormat df = Complex.df;
 
 	public static void simulate() {
 		Map<String, Complex> candidates = new HashMap<>();
@@ -75,9 +73,9 @@ public class Simulator {
 						continue;// this node cannot be calculated (either empty or bad data)
 					double[] v = complex.toVector();
 					v[type.index] = value;
-					Complex temp = new Complex(df.format(v[0]) + " " + df.format(v[1]) + " " + df.format(v[2]));
+					Complex temp = new Complex(Complex.f(v[0]) + " " + Complex.f(v[1]) + " " + Complex.f(v[2]));
 					complex.updateFromString(temp.toString());
-					line = line + df.format(value) + " ";
+					line = line + Complex.f(value) + " ";
 				}
 				canvas.valuesUpdated(false); // This is better than valuation.refreshAllValues(root)
 				complexRoot = (Complex) valuation.getTermValue(root);
