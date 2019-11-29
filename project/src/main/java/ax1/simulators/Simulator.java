@@ -20,9 +20,15 @@ import lu.uni.adtool.ui.canvas.AbstractDomainCanvas;
 /**
  * Simulate changes in values for attack trees and perform calculations up to
  * the root node. The simulation is performed in front-end to allow all the
- * existing events to be trigered.
+ * existing events to be trigered.s
  * 
- * Usage: select an attack tree and then go to menu/file/SIMULATE
+ * Usage: select an attack tree and then go to menu/file/SIMULATE5
+ * 
+ * Note: the tree must be filled before simulatin
+ * 
+ * TYPES: - default: calculates the root risk depending on countermeasures. - p,
+ * i, or c, add that char on each node to be simulated (p=prob, i=impact,
+ * c=cost)
  */
 public class Simulator {
 
@@ -32,6 +38,7 @@ public class Simulator {
 		Map<String, Complex> candidates = new HashMap<>();
 		Map<Complex, String> backup = new HashMap<>();
 		AbstractDomainCanvas<Ring> canvas = null;
+		List<String> results = new ArrayList<>();
 		try {
 			log("-----SIMULATION STARTED!-----");
 			// ---------------- PREPARE SIMULATION (variables)----------------
@@ -39,20 +46,26 @@ public class Simulator {
 			ValuationDomain valuation = canvas.getValues();
 			ValueAssignement<Ring> map = valuation.getValueMap();
 
-			Set<SimulationType> types = new TreeSet<>(new MyComparator());
-			putNodes(true, map, candidates, types, backup); // find attack nodes
-			putNodes(false, map, candidates, types, backup); // find countermeasures nodes
-			if (types.size() != 1) {
-				throw new Exception("The simulation algorithm must have EXACTLY ONE type, and found " + types.size());
-			}
-
-			// ----------------START SIMULATION-----------------------------------------
-			List<String> results = new ArrayList<>();
 			ADTNode root = (ADTNode) canvas.getTree().getRoot(true);
 			Complex complexRoot = (Complex) valuation.getTermValue(root);
 			if (complexRoot == null)
 				throw new Exception("Tree is still incomplete, root node must have values");
 
+			Set<SimulationType> types = new TreeSet<>(new MyComparator());
+			putNodes(true, map, candidates, types, backup); // find attack nodes
+			putNodes(false, map, candidates, types, backup); // find countermeasures nodes
+			if (types.size() != 1) {
+				// throw new Exception("The simulation algorithm must have EXACTLY ONE type, and
+				// found " + types.size());
+				log("No simulation type found. Using the default simulation (countermeasures activation)");
+				simulateCountermeasures(canvas, map, candidates, results, backup, root);
+				for (String s : results)
+					log(s);
+				log("-----SIMULATION FINISHED------");
+				return;
+			}
+
+			// ----------------START SIMULATION-----------------------------------------
 			SimulationType type = types.iterator().next();
 			results.add(type.description);
 
@@ -130,6 +143,67 @@ public class Simulator {
 
 	public static void logError(String message) {
 		main.getController().reportError(message);
+	}
+
+	/**
+	 * Get all CM and simulate the risk at ROOT when enabling and disabling some of
+	 * them
+	 */
+	private static void simulateCountermeasures(AbstractDomainCanvas<Ring> canvas, ValueAssignement<Ring> map,
+			Map<String, Complex> candidates, List<String> results, Map<Complex, String> backup, ADTNode root) {
+		// get all editables CMs
+		boolean isProponent = false;
+		Set<String> keys = map.keySet(isProponent);
+		List<Complex> values = new ArrayList<>();
+
+		// get header line
+		String header = "";
+		for (String key : keys)
+			header = header + key + "|";
+		header = header + root.getName();
+		header = header.replace(" ", "_").replace("|", " ");
+		results.add(header);
+
+		// add all editable CM as candidates
+		for (String key : keys) {
+			Complex complex = (Complex) map.get(isProponent, key);
+			candidates.put(key, complex);
+			values.add(complex);
+			backup.put(complex, complex.toString());
+		}
+
+		// the list of branches equals from 0 - 2^n
+		int TOTAL = 1 << keys.size();
+
+		// foreach iteration
+		for (int r = 0; r < TOTAL; r++) {
+			// get array [00110011...]
+			String temp = "";
+			String b = Integer.toBinaryString(r);
+			for (int s = 0; s < keys.size() - b.length(); s++)
+				temp = temp + "0";
+			temp = temp + b;
+			String[] sarr = temp.split("");
+			String line = "";
+			for (int s = 0; s < sarr.length; s++) {
+				int bit = sarr[s].equals("1") ? 1 : 0;
+				line = line + sarr[s] + " ";
+				// toggle the countermeasure value and refresh tree sequentially
+				Complex c = values.get(s);
+				double[] v = new double[] { 0, 10, 10 }; // and not 0,0,0 because we want 0,10,10(inactive) or
+															// 1,10,10(active full)
+				if (c.toString().equals("") == false)
+					v = c.toVector();
+				v[0] = bit;
+				Complex tempC = new Complex(Complex.f(v[0]) + " " + Complex.f(v[1]) + " " + Complex.f(v[2]));
+				c.updateFromString(tempC.toString());
+				canvas.valuesUpdated(false);
+			}
+			Complex complexRoot = (Complex) canvas.getValues().getTermValue(root);
+			line = line + complexRoot.toString();
+			results.add(line);
+		}
+
 	}
 
 	static class MyComparator implements Comparator<SimulationType> {
