@@ -69,7 +69,7 @@ public final class Options {
   /**
    * logging options
    */
-  public static int           log_noLinesSaved          = 1000;
+  public static int           log_noLinesSaved          = 10000; //log panel: increased limit of visible rows (useful on simulations)
   /**
    * Print options
    */
