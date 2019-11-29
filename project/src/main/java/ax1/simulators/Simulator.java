@@ -1,5 +1,9 @@
 package ax1.simulators;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -59,8 +63,15 @@ public class Simulator {
 				// found " + types.size());
 				log("No simulation type found. Using the default simulation (countermeasures activation)");
 				simulateCountermeasures(canvas, map, candidates, results, backup, root);
-				for (String s : results)
-					log(s);
+				if (results.size() > 100) {
+					log("results size is  big to display. Created a file 'simulation_results.txt' in the project root with the content instead.");
+					saveToFile(results);
+				} else {
+					for (String s : results) {
+						log(s);
+						System.out.println(s);
+					}
+				}
 				log("-----SIMULATION FINISHED------");
 				return;
 			}
@@ -155,6 +166,7 @@ public class Simulator {
 		boolean isProponent = false;
 		Set<String> keys = map.keySet(isProponent);
 		List<Complex> values = new ArrayList<>();
+		List<Double> backupProbabilities = new ArrayList<>();
 
 		// get header line
 		String header = "";
@@ -170,6 +182,9 @@ public class Simulator {
 			candidates.put(key, complex);
 			values.add(complex);
 			backup.put(complex, complex.toString());
+			String original = complex.toString().contentEquals("") ? "0 0 0" : complex.toString();
+			double[] v = Complex.toVector(original);
+			backupProbabilities.add(v[0]);
 		}
 
 		// the list of branches equals from 0 - 2^n
@@ -186,7 +201,8 @@ public class Simulator {
 			String[] sarr = temp.split("");
 			String line = "";
 			for (int s = 0; s < sarr.length; s++) {
-				int bit = sarr[s].equals("1") ? 1 : 0;
+				// activate or deactivate the countermeasure
+				boolean activate = sarr[s].equals("1") ? true : false;
 				line = line + sarr[s] + " ";
 				// toggle the countermeasure value and refresh tree sequentially
 				Complex c = values.get(s);
@@ -194,7 +210,7 @@ public class Simulator {
 															// 1,10,10(active full)
 				if (c.toString().equals("") == false)
 					v = c.toVector();
-				v[0] = bit;
+				v[0] = activate ? backupProbabilities.get(s) : 0; // deactivated if p=0, activated if p=p_original
 				Complex tempC = new Complex(Complex.f(v[0]) + " " + Complex.f(v[1]) + " " + Complex.f(v[2]));
 				c.updateFromString(tempC.toString());
 				canvas.valuesUpdated(false);
@@ -204,6 +220,35 @@ public class Simulator {
 			results.add(line);
 		}
 
+	}
+
+//    private static void saveToFile(List<String> results) {
+//        try {
+//        	for(String line:results)
+//  
+//            Files.write(Paths.get("simulation.txt"), line.getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+	private static void saveToFile(List<String> results) {
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(new File("simulation_results.txt"));
+			for (String line : results) {
+				line = line + "\n";
+				os.write(line.getBytes(), 0, line.length());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	static class MyComparator implements Comparator<SimulationType> {

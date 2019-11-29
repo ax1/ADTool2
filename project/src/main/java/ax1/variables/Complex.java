@@ -53,7 +53,7 @@ public class Complex implements Ring {
 		return toVector(this.value);
 	}
 
-	private static double[] toVector(String value) {
+	public static double[] toVector(String value) {
 		int SIZE = 3; // [prob, impact, cost,....]
 		String[] data = value.split(" ");
 		double[] arr = new double[SIZE];
