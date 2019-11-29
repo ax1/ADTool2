@@ -89,7 +89,7 @@ public class Simulator {
 			log(header);
 
 			double value = 0;
-			for (int r = 0; r <= 10; r++) {
+			for (int r = 0; r <= 20; r++) {
 				String line = "";
 
 				for (String key : candidates.keySet()) {
