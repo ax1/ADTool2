@@ -269,7 +269,7 @@ public class Simulator {
 		public SimulationType(String text) {
 			type = text.contains("p") ? "p" : text.contains("i") ? "i" : text.contains("c") ? "c" : null;
 			index = text.contains("p") ? 0 : text.contains("i") ? 1 : text.contains("c") ? 2 : -1;
-			tick = (type != null && type.equals("p")) ? 0.1 : 1;
+			tick = (type != null && type.equals("p")) ? 0.05 : 0.5; // 1/100th to get100 points for graphs
 			description = "Simulation type: " + (text.contains("p") ? "probability"
 					: text.contains("i") ? "impact" : text.contains("c") ? "cost" : "<undefined>");
 		}
