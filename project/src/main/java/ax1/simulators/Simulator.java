@@ -24,7 +24,7 @@ import lu.uni.adtool.ui.canvas.AbstractDomainCanvas;
  * 
  * Usage: select an attack tree and then go to menu/file/SIMULATE5
  * 
- * Note: the tree must be filled before simulatin
+ * Note: the tree must be filled before simulating
  * 
  * TYPES: - default: calculates the root risk depending on countermeasures. - p,
  * i, or c, add that char on each node to be simulated (p=prob, i=impact,
