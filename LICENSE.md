@@ -1,5 +1,5 @@
-                    GNU AFFERO GENERAL PUBLIC LICENSE
-                       Version 3, 19 November 2007
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
 
 Original license from forked repo: GNU Affero 3.0 General Public License See java classes documentation header
  
